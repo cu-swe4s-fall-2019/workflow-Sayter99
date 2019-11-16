@@ -8,7 +8,7 @@ import time
 def parse_args():
     parser = argparse.ArgumentParser(
         description='The right way to pass parameters.',
-        prog='plot_gtex.py')
+        prog='get_tissue_samples.py')
 
     # require file name as one of the inputs
     parser.add_argument('--output_file',
@@ -64,8 +64,10 @@ def parse_meta(group, file):
         if key in ht.keys():
             search = ht[key]
         if (search is None):
-            ht[key] = value
+            ht[key] = [value]
             target_group.append(key)
+        else:
+            search.append(value)
     f.close()
     return ht, target_group
 
@@ -95,7 +97,11 @@ def main():
     else:
         output = open(args.output_file, 'w')
         for i in range(len(target_group)):
-            output.write(target_group[i])
+            output.write(target_group[i] + ': ')
+            for j in range(len(meta_map[target_group[i]])):
+                output.write(meta_map[target_group[i]][j])
+                if j != len(meta_map[target_group[i]]) - 1:
+                    output.write(' ')
             if i != len(target_group) - 1:
                 output.write('\n')
         output.close()
