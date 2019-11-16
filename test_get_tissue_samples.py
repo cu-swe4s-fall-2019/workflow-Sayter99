@@ -11,8 +11,8 @@ class TestGetTissueSamples(unittest.TestCase):
         a, b = get_tissue_samples.parse_meta(group_type, sample)
         self.assertNotEqual(a, None)
         b.sort()
-        self.assertEqual(b[0], 'Adipose Tissue')
-        self.assertEqual(b[30], 'Vagina')
+        self.assertEqual(b[0].split(':')[0], 'Adipose Tissue')
+        self.assertEqual(b[30].split(':')[0], 'Vagina')
 
     def test_linear_search(self):
         L = [1, 2, 3, 4, 5, 6]

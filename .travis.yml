@@ -4,6 +4,7 @@ before_install:
     - wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
     - bash Miniconda3-latest-Linux-x86_64.sh -b
     - . /home/travis/miniconda3/etc/profile.d/conda.sh
+    - conda update --yes conda
     - conda config --add channels r
     - conda create --yes -n test
     - conda activate test
@@ -15,3 +16,5 @@ before_install:
 script:
     - python test_get_tissue_samples.py
     - bash test_get_tissue_samples.sh
+    - python test_get_gene_counts.py
+    - bash test_get_gene_counts.sh
