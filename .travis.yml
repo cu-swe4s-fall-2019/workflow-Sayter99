@@ -1,18 +1,19 @@
 language: python
 
 before_install:
-    - wget https://repo.anaconda.com/miniconda/Miniconda3-4.7.10-Linux-x86_64.sh
-    - bash Miniconda3-4.7.10-Linux-x86_64.sh -b
-    - . /home/travis/miniconda3/etc/profile.d/conda.sh
-    - conda config --add channels r
-    - conda create --yes -n test
-    - conda activate test
-    - conda install -y pycodestyle
-    - conda install -y matplotlib
-    - conda install --yes python=3.6
+    - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
+    - chmod +x miniconda.sh
+    - ./miniconda.sh -b
+    - export PATH=/home/travis/miniconda/bin:$PATH
+    - conda update --yes conda
+    - conda create --yes -n test python=$TRAVIS_PYTHON_VERSION
+    - source activate test
+    - conda install --yes numpy=$NUMPY scipy=$SCIPY astropy matplotlib pytest pip pycodestyle
 
 script:
     - python test_get_tissue_samples.py
     - bash test_get_tissue_samples.sh
     - python test_get_gene_counts.py
     - bash test_get_gene_counts.sh
+    - python test_box.py
+    - bash test_box.sh
